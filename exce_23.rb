@@ -11,9 +11,10 @@ class Employee
 
   def to_s
   	"#{@name}(EmpId: #{@emp_id})"
+  end
 end
 # This is the class which reads from "data.csv" and writes the data to file "output.txt"
-class Files
+class ReadWrite
   def initialize
     @employees = []
   end
@@ -33,16 +34,15 @@ class Files
 
   def write_data
   	hash = hash_save.sort.to_h
-  	File.open("output.txt", "w") do |file|
-      hash.each_key do |key|
-      	file.puts hash[key].length > 1 ? "#{key}s" : key
-      	file.puts hash[key].sort_by { |employee| employee.emp_id }
-      	file.puts ""
+    hash.each_key do |key|
+      File.open(hash[key].length > 1 ? "#{key}s.txt" : "#{key}.txt", "w") do |file|
+        file.puts hash[key].sort_by { |employee| employee.emp_id }
+        file.puts
       end
     end
   end
 end
 
-file = Files.new
-file.read_in_csv_data
-file.write_data
+reader_writer = ReadWrite.new
+reader_writer.read_in_csv_data
+reader_writer.write_data
