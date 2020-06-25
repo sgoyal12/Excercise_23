@@ -1,3 +1,0 @@
-Mary(EmpId: 13)
-Jane(EmpId: 17)
-
